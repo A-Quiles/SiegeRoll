@@ -14,20 +14,20 @@
 
 .sr-bg-glow {
   position: fixed;
-  top: -30%; left: 50%; transform: translateX(-50%);
-  width: 1000px; height: 600px;
-  background: radial-gradient(ellipse, rgba(244,195,0,.06) 0%, transparent 65%);
+  top: -35%; left: 50%; transform: translateX(-50%);
+  width: 860px; height: 520px;
+  background: radial-gradient(ellipse, rgba(244,195,0,.06) 0%, transparent 70%);
 }
 
 .sr-wrapper {
   position: relative;
   z-index: 1;
-  max-width: 1180px;
+  max-width: 920px;
   margin: 0 auto;
-  padding: 44px 24px 64px;
+  padding: 26px 16px 42px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 }
 
 .sr-header {
@@ -54,9 +54,9 @@
 
 .sr-logo {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 42px;
+  font-size: 32px;
   font-weight: 900;
-  letter-spacing: 6px;
+  letter-spacing: 4px;
   color: #fff;
   text-transform: uppercase;
 }
@@ -76,8 +76,8 @@
 .sr-subtitle {
   margin: 0;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12px;
-  letter-spacing: 2.8px;
+  font-size: 11px;
+  letter-spacing: 2.4px;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.84);
   text-shadow: none;
@@ -132,10 +132,10 @@
   background: transparent;
   border: 1px solid var(--sr-border);
   color: var(--sr-muted);
-  padding: 11px 24px;
+  padding: 8px 16px;
   cursor: pointer;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 700; font-size: 13px; letter-spacing: 3px;
+  font-weight: 700; font-size: 11px; letter-spacing: 2px;
   text-transform: uppercase;
   transition: all .15s;
   position: relative; z-index: 0;
@@ -155,7 +155,7 @@
 
 .sr-ops-count {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 18px; letter-spacing: 1px;
+  font-size: 16px; letter-spacing: 1px;
   color: var(--sr-dim);
 }
 
@@ -163,10 +163,10 @@
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 10px;
-  width: min(100%, 420px);
-  margin: 0 auto 18px;
-  padding: 14px 22px;
+  gap: 8px;
+  width: min(100%, 360px);
+  margin: 0 auto 16px;
+  padding: 12px 18px;
   background: transparent;
   border: none;
   border-radius: 999px;
@@ -196,7 +196,7 @@
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
-  gap: 36px;
+  gap: 24px;
   width: 100%;
   flex-wrap: wrap;
 }
@@ -240,9 +240,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
   width: 100%;
-  max-width: 780px;
+  max-width: 660px;
   flex-shrink: 0;
 }
 
@@ -268,7 +268,7 @@
 
 // ── Op card ───────────────────────────────────────────────────────────────
 .sr-op-card {
-  width: 280px; height: 330px;
+  width: 220px; height: 270px;
   background: linear-gradient(145deg, #131b24 0%, var(--sr-bg2) 100%);
   border: 2px solid var(--sr-border);
   border-radius: 6px;
@@ -276,7 +276,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   position: relative;
   overflow: hidden;
   transition: border-color .08s, box-shadow .08s;
@@ -307,22 +307,22 @@
   position: absolute;
   top: 12px; right: 12px;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 10px; font-weight: 700; letter-spacing: 2px;
-  padding: 3px 9px;
+  font-size: 9px; font-weight: 700; letter-spacing: 1.8px;
+  padding: 2px 8px;
   border-radius: 1px;
   color: #fff;
 }
 
 // Image
 .sr-img-wrap {
-  width: 170px; height: 170px;
+  width: 130px; height: 130px;
   display: flex; align-items: center; justify-content: center;
   position: relative;
 }
 
 .sr-glow-disc {
   position: absolute;
-  width: 140px; height: 140px;
+  width: 100px; height: 100px;
   border-radius: 50%;
 }
 
@@ -334,11 +334,11 @@
 }
 
 .sr-op-fallback {
-  width: 100px; height: 100px;
+  width: 90px; height: 90px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 32px;
+  font-weight: 900; font-size: 28px;
   position: relative; z-index: 1;
   border: 2px solid currentColor;
 }
@@ -346,7 +346,7 @@
 // Name
 .sr-op-name {
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 32px; letter-spacing: 5px;
+  font-weight: 900; font-size: 24px; letter-spacing: 3px;
   color: #e8ecf0; text-transform: uppercase;
   text-shadow: 0 2px 8px rgba(0,0,0,.6);
 }
@@ -354,8 +354,8 @@
 .sr-op-meta {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: 12px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .sr-op-meta-item {
@@ -388,10 +388,10 @@
 
 // Flag row
 .sr-flag-row {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 8px;
 }
-.sr-flag-line { width: 32px; height: 1px; }
-.sr-flag { font-size: 22px; }
+.sr-flag-line { width: 24px; height: 1px; }
+.sr-flag { font-size: 18px; }
 
 // Speed
 .sr-speed-row {
@@ -416,15 +416,15 @@
   background: var(--sr-gold);
   border: none;
   color: var(--sr-bg);
-  padding: 18px 72px;
+  padding: 14px 48px;
   cursor: pointer;
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 28px; letter-spacing: 6px;
+  font-weight: 900; font-size: 20px; letter-spacing: 4px;
   text-transform: uppercase;
   transition: all .2s;
   clip-path: polygon(16px 0%, 100% 0%, calc(100% - 16px) 100%, 0% 100%);
   position: relative; overflow: hidden;
-  width: min(100%, 420px);
+  width: min(100%, 380px);
   max-width: 100%;
 
   &::before {
@@ -465,19 +465,19 @@
 // ── Result panel ──────────────────────────────────────────────────────────
 .sr-result-panel {
   width: 100%;
-  max-width: 560px;
+  max-width: 480px;
   background: rgba(10, 15, 22, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(18px);
   box-shadow: 0 32px 90px rgba(0, 0, 0, .35);
-  border-radius: 28px;
-  padding: 30px 30px 28px;
+  border-radius: 24px;
+  padding: 22px 22px 20px;
   animation: revealUp .5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .sr-panel-header {
-  display: flex; align-items: center; gap: 14px;
-  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px;
   flex-wrap: wrap;
 }
 
@@ -512,20 +512,20 @@
 .sr-op-banner {
   border-left-width: 3px; border-left-style: solid;
   border-top: 1px solid; border-right: 1px solid; border-bottom: 1px solid;
-  padding: 20px 24px;
-  margin-bottom: 16px;
-  display: flex; align-items: center; gap: 18px;
-  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 14px;
+  border-radius: 14px;
   background: rgba(255,255,255,.04);
 }
 .sr-banner-avatar {
-  width: 56px; height: 56px;
+  width: 44px; height: 44px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px; font-weight: 900;
+  font-size: 13px; font-weight: 900;
   color: #fff;
-  box-shadow: 0 12px 30px rgba(0,0,0,.25);
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
   object-fit: cover;
 }
 .sr-banner-avatar[src] {
@@ -533,7 +533,7 @@
 }
 .sr-banner-name {
   font-family: 'Barlow Condensed', sans-serif;
-  font-weight: 900; font-size: 28px; letter-spacing: 4px;
+  font-weight: 900; font-size: 20px; letter-spacing: 2px;
   color: #e8ecf0; text-transform: uppercase;
 }
 .sr-banner-role {
@@ -604,7 +604,7 @@
   margin: 0;
   color: rgba(255,255,255,.88);
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.9;
 }
 
@@ -666,16 +666,16 @@
   background: rgba(255,255,255,.08);
   border: 1px solid rgba(255,255,255,.16);
   color: #f7f7f7;
-  padding: 16px 24px;
+  padding: 12px 18px;
   cursor: pointer;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 15px; font-weight: 900; letter-spacing: 3px;
+  font-size: 13px; font-weight: 900; letter-spacing: 2px;
   text-transform: uppercase;
   transition: all .18s ease;
   border-radius: 999px;
   margin: 24px auto 0;
   width: 100%;
-  max-width: 420px;
+  max-width: 340px;
   display: block;
   box-shadow: 0 12px 40px rgba(0,0,0,.18);
 }
@@ -701,12 +701,12 @@
 
 // ── History ───────────────────────────────────────────────────────────────
 .sr-history {
-  margin-top: 52px;
+  margin-top: 42px;
   width: 100%;
   background: rgba(8, 11, 16, .82);
   border: 1px solid rgba(244, 195, 0, .14);
-  border-radius: 16px;
-  padding: 22px 28px;
+  border-radius: 14px;
+  padding: 18px 24px;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 20px 50px rgba(0,0,0,.25);
 }
 
