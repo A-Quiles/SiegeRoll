@@ -1,0 +1,13 @@
+{
+  "name": "SiegeRoll",
+  "short_name": "SiegeRoll",
+  "description": "Random Rainbow Six Siege operator & loadout generator",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06090d",
+  "theme_color": "#F4C300",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "assets/icon/favicon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

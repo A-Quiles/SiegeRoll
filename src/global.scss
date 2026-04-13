@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@400;500;600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+ion-content {
+  --background: #06090d;
+}
+
+ion-header ion-toolbar {
+  --background: transparent;
+  --border-color: transparent;
+}
+
+// ── Global animations ─────────────────────────────────────────────────────
+@keyframes scanline {
+  from { top: -10%; }
+  to   { top: 110%; }
+}
+@keyframes glowPulse {
+  0%,100% { box-shadow: 0 0 20px rgba(244,195,0,.3); }
+  50%     { box-shadow: 0 0 60px rgba(244,195,0,.8), 0 0 120px rgba(244,195,0,.2); }
+}
+@keyframes bounceY {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(32px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes shimmer {
+  from { left: -100%; }
+  to   { left: 200%; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes flicker {
+  0%,100% { opacity: 1; } 48% { opacity: .65; } 52% { opacity: 1; }
+}
+@keyframes logoGlow {
+  0%,100% { text-shadow: 0 0 20px rgba(244,195,0,.3); }
+  50%      { text-shadow: 0 0 50px rgba(244,195,0,.8), 0 0 100px rgba(244,195,0,.2); }
+}
+@keyframes gridMove {
+  from { background-position: 0 0; }
+  to   { background-position: 48px 48px; }
+}

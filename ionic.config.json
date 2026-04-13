@@ -1,0 +1,7 @@
+{
+  "name": "siegeroll",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

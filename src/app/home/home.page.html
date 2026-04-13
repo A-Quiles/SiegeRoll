@@ -1,0 +1,327 @@
+﻿<ion-content [fullscreen]="true" class="sr-content">
+  <!-- ── Tactical grid background ── -->
+  <div class="sr-bg-grid"></div>
+  <div class="sr-bg-glow"></div>
+
+  <div class="sr-wrapper">
+    <!-- ══ HEADER ══════════════════════════════════════════════════════ -->
+    <header class="sr-header">
+      <div class="sr-logo-block">
+        <div class="sr-logo-row">
+          <h1 class="sr-logo">Siege<span class="sr-logo-accent">Roll</span></h1>
+          <div class="sr-diamond"></div>
+        </div>
+        <p class="sr-subtitle">{{ i18n.t.subtitle }}</p>
+      </div>
+      <button class="sr-lang-btn" (click)="toggleLang()">
+        {{ i18n.t.switchTo }}
+      </button>
+    </header>
+
+    <div class="sr-divider"></div>
+
+    <!-- ══ FILTER BAR ═══════════════════════════════════════════════════ -->
+    <div class="sr-filter-bar">
+      <div class="sr-filter-group">
+        <button
+          class="sr-filter-btn"
+          [class.active]="filter() === 'all'"
+          (click)="setFilter('all')"
+        >
+          {{ i18n.t.all }}
+        </button>
+        <button
+          class="sr-filter-btn"
+          [class.active]="filter() === 'attacker'"
+          (click)="setFilter('attacker')"
+        >
+          {{ i18n.t.atk }}
+        </button>
+        <button
+          class="sr-filter-btn"
+          [class.active]="filter() === 'defender'"
+          (click)="setFilter('defender')"
+        >
+          {{ i18n.t.def }}
+        </button>
+      </div>
+    </div>
+    <div class="sr-ops-summary">
+      <span class="sr-ops-count">{{ pool().length }}</span>
+      <span class="sr-ops-label">OPS</span>
+    </div>
+
+    <!-- ══ MAIN ═════════════════════════════════════════════════════════ -->
+    <div class="sr-main">
+      <div class="sr-left-column">
+        <div class="sr-spin-area">
+          <!-- Card with bracket corners -->
+          <div class="sr-card-outer" [class.spinning]="spinning()">
+            <div class="sr-bracket sr-bracket-tl"></div>
+            <div class="sr-bracket sr-bracket-tr"></div>
+            <div class="sr-bracket sr-bracket-bl"></div>
+            <div class="sr-bracket sr-bracket-br"></div>
+
+            <div
+              class="sr-op-card"
+              [class.spinning]="spinning()"
+              [style.border-color]="spinning() ? 'var(--sr-gold)' : accentHex() + '88'"
+              [style.box-shadow]="spinning()
+                   ? '0 0 40px rgba(244,195,0,.6)'
+                   : '0 4px 30px ' + accentHex() + '22, inset 0 0 60px ' + accentHex() + '08'"
+            >
+              <div class="sr-scan" *ngIf="spinning()"></div>
+              <div
+                class="sr-edge sr-edge-t"
+                [style.background]="'linear-gradient(90deg,' + accentHex() + ',transparent)'"
+              ></div>
+              <div
+                class="sr-edge sr-edge-b"
+                [style.background]="'linear-gradient(270deg,' + accentHex() + ',transparent)'"
+              ></div>
+              <div
+                class="sr-edge sr-edge-l"
+                [style.background]="'linear-gradient(180deg,' + accentHex() + ',transparent)'"
+              ></div>
+              <div
+                class="sr-edge sr-edge-r"
+                [style.background]="'linear-gradient(0deg,' + accentHex() + ',transparent)'"
+              ></div>
+
+              <div class="sr-role-badge" [style.background]="accentHex()">
+                {{ displayOp().role === 'attacker' ? i18n.t.badge_atk :
+                i18n.t.badge_def }}
+              </div>
+
+              <div class="sr-img-wrap">
+                <div
+                  class="sr-glow-disc"
+                  [style.background]="'radial-gradient(circle,' + accentHex() + '18 0%,transparent 70%)'"
+                ></div>
+                <img
+                  *ngIf="!imgError()"
+                  class="sr-op-img"
+                  [src]="getImgUrl(displayOp().id)"
+                  [alt]="displayOp().name"
+                  (error)="imgError.set(true)"
+                />
+                <div
+                  *ngIf="imgError()"
+                  class="sr-op-fallback"
+                  [style.border-color]="accentHex()"
+                  [style.color]="accentHex()"
+                >
+                  {{ displayOp().name.slice(0,2).toUpperCase() }}
+                </div>
+              </div>
+
+              <div class="sr-op-name">{{ displayOp().name }}</div>
+              <div class="sr-op-meta">
+                <span class="sr-op-meta-item" [style.color]="accentHex()"
+                  >{{ i18n.t.speed }} · {{ displayOp().speed }}</span
+                >
+                <div class="sr-speed-dots">
+                  <span
+                    *ngFor="let active of speedDots()"
+                    class="sr-speed-dot"
+                    [class.active]="active"
+                    [style.border-color]="accentHex()"
+                    [style.background]="active ? accentHex() : 'transparent'"
+                  ></span>
+                </div>
+              </div>
+
+              <div class="sr-flag-row">
+                <div
+                  class="sr-flag-line"
+                  [style.background]="accentHex() + '55'"
+                ></div>
+                <span class="sr-flag">{{ displayOp().flag }}</span>
+                <div
+                  class="sr-flag-line"
+                  [style.background]="accentHex() + '55'"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <button class="sr-roll-btn" [disabled]="spinning()" (click)="roll()">
+            {{ spinning() ? i18n.t.rolling : i18n.t.roll }}
+          </button>
+
+          <p class="sr-hint" *ngIf="!loadout() && !spinning()">
+            {{ i18n.t.hint }}
+          </p>
+
+          <div
+            class="sr-history sr-history--desktop"
+            *ngIf="history().length > 0"
+          >
+            <div class="sr-history-head">
+              <span class="sr-history-title">{{ i18n.t.history }}</span>
+              <span class="sr-history-counter"
+                >{{ history().length }} / 10</span
+              >
+            </div>
+            <div class="sr-history-list">
+              <div
+                *ngFor="let op of history(); let i = index"
+                class="sr-history-chip"
+                [style.animation-delay]="i * 0.04 + 's'"
+              >
+                <img
+                  class="sr-history-icon"
+                  [src]="getImgUrl(op.id)"
+                  [alt]="op.name"
+                />
+                <span class="sr-history-name">{{ op.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-right-column" *ngIf="loadout() as l">
+        <div class="sr-result-panel">
+          <div class="sr-panel-header">
+            <div class="sr-panel-accent" [style.background]="accentHex()"></div>
+            <span class="sr-panel-label">{{ i18n.t.loadout }}</span>
+            <div class="sr-panel-line"></div>
+            <span class="sr-panel-role" [style.color]="accentHex()">
+              {{ l.operator.role === 'attacker' ? i18n.t.badge_atk :
+              i18n.t.badge_def }}
+            </span>
+          </div>
+
+          <div
+            class="sr-op-banner"
+            [style.border-left-color]="accentHex()"
+            [style.border-color]="accentHex() + '44'"
+            [style.background]="'linear-gradient(90deg,' + accentHex() + '12,transparent)'"
+          >
+            <img
+              class="sr-banner-avatar"
+              [src]="getImgUrl(l.operator.id)"
+              [alt]="l.operator.name"
+            />
+            <div>
+              <div class="sr-banner-name">{{ l.operator.name }}</div>
+              <div class="sr-banner-role" [style.color]="accentHex()">
+                {{ l.operator.role === 'attacker' ? i18n.t.attacker :
+                i18n.t.defender }}
+              </div>
+            </div>
+          </div>
+
+          <div class="sr-loadout-list">
+            <div
+              class="sr-loadout-item"
+              [style.border-left-color]="accentHex()"
+              [style.animation-delay]="'0.08s'"
+            >
+              <div class="sr-item-text">
+                <div class="sr-item-label" [style.color]="accentHex()">
+                  {{ i18n.t.primary }}
+                </div>
+                <div class="sr-item-value">{{ l.primary }}</div>
+              </div>
+            </div>
+            <div
+              class="sr-loadout-item"
+              [style.border-left-color]="accentHex()"
+              [style.animation-delay]="'0.16s'"
+            >
+              <div class="sr-item-text">
+                <div class="sr-item-label" [style.color]="accentHex()">
+                  {{ i18n.t.secondary }}
+                </div>
+                <div class="sr-item-value">{{ l.secondary }}</div>
+              </div>
+            </div>
+            <div
+              class="sr-loadout-item"
+              [style.border-left-color]="accentHex()"
+              [style.animation-delay]="'0.24s'"
+            >
+              <div class="sr-item-text">
+                <div class="sr-item-label" [style.color]="accentHex()">
+                  {{ i18n.t.gadget }}
+                </div>
+                <div class="sr-item-value">
+                  {{ i18n.translateEquipment(l.operator.gadget) }}
+                </div>
+              </div>
+            </div>
+            <div
+              class="sr-loadout-item"
+              [style.border-left-color]="accentHex()"
+              [style.animation-delay]="'0.32s'"
+            >
+              <div class="sr-item-text">
+                <div class="sr-item-label" [style.color]="accentHex()">
+                  {{ i18n.t.tactical }}
+                </div>
+                <div class="sr-item-value">
+                  {{ i18n.translateEquipment(l.throwable) }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sr-maps-box">
+            <div class="sr-subsection-header">
+              <span class="sr-subsection-label"
+                >{{ i18n.t.recommendedMaps }}</span
+              >
+            </div>
+            <div class="sr-maps-list">
+              <span *ngFor="let map of recommendedMaps()" class="sr-map-chip">
+                {{ map }}
+              </span>
+            </div>
+          </div>
+
+          <div class="sr-tip-box">
+            <div class="sr-subsection-header">
+              <span class="sr-subsection-label">{{ i18n.t.tacticalTip }}</span>
+            </div>
+            <p class="sr-tip-text">{{ tacticalTip() }}</p>
+          </div>
+
+          <button
+            class="sr-copy-btn"
+            [class.copied]="copyDone()"
+            (click)="copyLoadout()"
+          >
+            {{ copyDone() ? i18n.t.copied : i18n.t.copy }}
+          </button>
+
+          <div class="sr-seo-footer">
+            siegeroll.gg · Rainbow Six Siege Operator Roulette
+          </div>
+        </div>
+      </div>
+
+      <div class="sr-history sr-history--mobile" *ngIf="history().length > 0">
+        <div class="sr-history-head">
+          <span class="sr-history-title">{{ i18n.t.history }}</span>
+          <span class="sr-history-counter">{{ history().length }} / 10</span>
+        </div>
+        <div class="sr-history-list">
+          <div
+            *ngFor="let op of history(); let i = index"
+            class="sr-history-chip"
+            [style.animation-delay]="i * 0.04 + 's'"
+          >
+            <img
+              class="sr-history-icon"
+              [src]="getImgUrl(op.id)"
+              [alt]="op.name"
+            />
+            <span class="sr-history-name">{{ op.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

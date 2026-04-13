@@ -1,0 +1,31 @@
+// ── SiegeRoll Theme Variables ────────────────────────────────────────────
+:root {
+  --sr-gold:        #F4C300;
+  --sr-gold-dark:   #e6b800;
+  --sr-atk:         #E8640C;
+  --sr-def:         #2a9fd6;
+  --sr-bg:          #06090d;
+  --sr-bg2:         #0c1118;
+  --sr-bg3:         #101620;
+  --sr-border:      #1a2332;
+  --sr-text:        #dde3ec;
+  --sr-muted:       #3a4e62;
+  --sr-dim:         #1e2c3a;
+
+  // Ionic overrides
+  --ion-background-color:             #06090d;
+  --ion-background-color-rgb:         6, 9, 13;
+  --ion-text-color:                   #dde3ec;
+  --ion-text-color-rgb:               221, 227, 236;
+  --ion-color-primary:                #F4C300;
+  --ion-color-primary-rgb:            244, 195, 0;
+  --ion-color-primary-contrast:       #06090d;
+  --ion-color-primary-contrast-rgb:   6, 9, 13;
+  --ion-color-primary-shade:          #d7ac00;
+  --ion-color-primary-tint:           #f5c91a;
+  --ion-toolbar-background:           #06090d;
+  --ion-tab-bar-background:           #0c1118;
+  --ion-item-background:              #0c1118;
+  --ion-card-background:              #0c1118;
+  --ion-font-family:                  'Barlow', sans-serif;
+}
