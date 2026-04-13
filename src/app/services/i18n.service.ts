@@ -8,13 +8,14 @@ export interface Translations {
   roll: string; rolling: string;
   badge_atk: string; badge_def: string;
   primary: string; secondary: string;
-  gadget: string; tactical: string;
+  accessory: string; gadget: string; tactical: string;
   loadout: string; hint: string;
   attacker: string; defender: string;
   recommendedMaps: string; tacticalTip: string;
   history: string; copy: string; copied: string;
   switchTo: string;
   speed: string;
+  noAccessory: string;
 }
 
 const TRANSLATIONS: Record<Lang, Translations> = {
@@ -25,6 +26,7 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     badge_atk: 'ATK', badge_def: 'DEF',
     primary:   'PRIMARY WEAPON',
     secondary: 'SECONDARY WEAPON',
+    accessory: 'WEAPON ACCESSORY',
     gadget:    'OPERATOR GADGET',
     tactical:  'TACTICAL DEVICE',
     loadout:   'YOUR LOADOUT',
@@ -36,6 +38,7 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     copy:      '📋  COPY LOADOUT', copied: '✅  COPIED!',
     switchTo:  'ES',
     speed:     'SPEED',
+    noAccessory: 'No accessory',
   },
   es: {
     subtitle:  'RULETA DE OPERADORES R6',
@@ -44,6 +47,7 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     badge_atk: 'ATQ', badge_def: 'DEF',
     primary:   'ARMA PRINCIPAL',
     secondary: 'ARMA SECUNDARIA',
+    accessory: 'ACCESORIO',
     gadget:    'GADGET DEL OPERADOR',
     tactical:  'DISPOSITIVO TÁCTICO',
     loadout:   'TU LOADOUT',
@@ -55,6 +59,7 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     copy:      '📋  COPIAR LOADOUT', copied: '✅  ¡COPIADO!',
     switchTo:  'EN',
     speed:     'VELOCIDAD',
+    noAccessory: 'Sin accesorio',
   }
 };
 
@@ -139,6 +144,16 @@ export class I18nService {
       'banshee sonic defense': 'Defensa Sónica Banshee',
       'surya gate': 'Puerta Surya',
       'kóna station': 'Estación Kóna',
+      'holographic sight': 'Mira Holográfica',
+      'laser sight': 'Mira Láser',
+      'compensator': 'Compensador',
+      'vertical grip': 'Empuñadura Vertical',
+      'suppressor': 'Silenciador',
+      'red dot sight': 'Punto Rojo',
+      'acog sight': 'Mira ACOG',
+      'flash hider': 'Amortiguador de Destello',
+      'aimpoint': 'Mira Aimpoint',
+      '40mm grenade launcher': 'Lanzagranadas 40mm',
     }
   };
 

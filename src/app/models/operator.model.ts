@@ -6,6 +6,8 @@ export interface Operator {
   speed: 1 | 2 | 3;
   primaries: string[];
   secondaries: string[];
+  primaryAccessories?: Record<string, string[]>;
+  genericAccessories?: string[];
   gadget: string;
   throwables: string[];
   recommendedMaps?: string[];
@@ -15,6 +17,7 @@ export interface Operator {
 export interface Loadout {
   operator: Operator;
   primary: string;
+  accessory?: string;
   secondary: string;
   throwable: string;
 }

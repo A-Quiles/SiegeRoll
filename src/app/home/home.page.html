@@ -223,7 +223,9 @@
                 <div class="sr-item-label" [style.color]="accentHex()">
                   {{ i18n.t.primary }}
                 </div>
-                <div class="sr-item-value">{{ l.primary }}</div>
+                <div class="sr-item-value">
+                  {{ formatPrimary(l.primary, l.accessory) }}
+                </div>
               </div>
             </div>
             <div

@@ -477,6 +477,23 @@ const OPERATOR_PROFILES: Record<string, OperatorProfile> = {
   },
 };
 
+const WEAPON_ACCESSORIES: Record<string, string[]> = {
+  'G8A1': ['Holographic Sight', 'Laser Sight', 'Compensator'],
+  'C8-SFW': ['AIMpoint', 'Vertical Grip', 'Suppressor'],
+  'M4': ['ACOG Sight', 'Compensator', 'Flash Hider'],
+  'R4-C': ['Red Dot Sight', 'Vertical Grip', 'Flash Hider'],
+  'G36C': ['Holographic Sight', 'Suppressor', 'Vertical Grip'],
+  'MP5': ['Suppressor', 'Vertical Grip', 'Laser Sight'],
+  'P90': ['Holographic Sight', 'Laser Sight'],
+  'SC3000K': ['Red Dot Sight', 'Compensator'],
+  'AK-12': ['ACOG Sight', 'Compensator', 'Vertical Grip'],
+  'F2': ['Red Dot Sight', 'Suppressor'],
+  '416-C CARBINE': ['Holographic Sight', 'Vertical Grip'],
+  'SG-CQB': ['Laser Sight', '40mm Grenade Launcher'],
+};
+
+const DEFAULT_ACCESSORIES = ['Holographic Sight', 'Laser Sight', 'Suppressor', 'Vertical Grip'];
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -592,12 +609,52 @@ export class HomePage implements OnDestroy {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
+  private choosePrimaryAndAccessory(operator: Operator): { primary: string; accessory?: string } {
+    const primary = this.rand(operator.primaries);
+    const accessories = operator.primaryAccessories?.[primary]
+      ?? operator.genericAccessories
+      ?? WEAPON_ACCESSORIES[primary]
+      ?? DEFAULT_ACCESSORIES;
+
+    const uniqueAccessories = Array.from(new Set(accessories));
+    const count = Math.min(uniqueAccessories.length, 3);
+    const selectedCount = count > 0 ? Math.floor(Math.random() * count) + 1 : 0;
+    const chosen: string[] = [];
+    const pool = [...uniqueAccessories];
+
+    while (chosen.length < selectedCount && pool.length) {
+      const index = Math.floor(Math.random() * pool.length);
+      chosen.push(pool.splice(index, 1)[0]);
+    }
+
+    return {
+      primary,
+      accessory: chosen.length ? chosen.join(' + ') : undefined,
+    };
+  }
+
+  private translateAccessoryList(accessory?: string): string {
+    if (!accessory) return '';
+    return accessory
+      .split(' + ')
+      .map(item => this.i18n.translateEquipment(item))
+      .join(' + ');
+  }
+
+  formatPrimary(primary: string, accessory?: string): string {
+    return accessory
+      ? `${primary} + ${this.translateAccessoryList(accessory)}`
+      : primary;
+  }
+
   getImgUrl(id: string): string { return getImageUrl(id); }
 
   private createLoadout(operator: Operator): Loadout {
+    const { primary, accessory } = this.choosePrimaryAndAccessory(operator);
     return {
       operator,
-      primary: this.rand(operator.primaries),
+      primary,
+      accessory,
       secondary: this.rand(operator.secondaries),
       throwable: this.rand(operator.throwables),
     };
@@ -614,9 +671,11 @@ export class HomePage implements OnDestroy {
     this.imgError.set(false);
 
     const chosen  = this.rand(p);
+    const { primary, accessory } = this.choosePrimaryAndAccessory(chosen);
     const result: Loadout = {
       operator:  chosen,
-      primary:   this.rand(chosen.primaries),
+      primary,
+      accessory,
       secondary: this.rand(chosen.secondaries),
       throwable: this.rand(chosen.throwables),
     };
@@ -657,7 +716,7 @@ export class HomePage implements OnDestroy {
     const text =
       `SiegeRoll.gg — ${l.operator.name.toUpperCase()}\n` +
       `Role: ${this.i18n.t[l.operator.role]}\n` +
-      `${this.i18n.t.primary}: ${l.primary}\n` +
+      `${this.i18n.t.primary}: ${this.formatPrimary(l.primary, l.accessory)}\n` +
       `${this.i18n.t.secondary}: ${l.secondary}\n` +
       `${this.i18n.t.gadget}: ${this.i18n.translateEquipment(l.operator.gadget)}\n` +
       `${this.i18n.t.tactical}: ${this.i18n.translateEquipment(l.throwable)}`;
