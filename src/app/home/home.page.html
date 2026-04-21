@@ -45,9 +45,16 @@
           {{ i18n.t.def }}
         </button>
       </div>
+      <button
+        class="sr-filter-btn sr-no-repeat-btn"
+        [class.active]="noRepeat()"
+        (click)="toggleNoRepeat()"
+      >
+        {{ i18n.t.noRepeat }}
+      </button>
     </div>
     <div class="sr-ops-summary">
-      <span class="sr-ops-count">{{ pool().length }}</span>
+      <span class="sr-ops-count">{{ availablePool().length }}</span>
       <span class="sr-ops-label">OPS</span>
     </div>
 
@@ -145,12 +152,22 @@
             </div>
           </div>
 
-          <button class="sr-roll-btn" [disabled]="spinning()" (click)="roll()">
+          <button
+            class="sr-roll-btn"
+            [disabled]="spinning() || availablePool().length === 0"
+            (click)="roll()"
+          >
             {{ spinning() ? i18n.t.rolling : i18n.t.roll }}
           </button>
 
-          <p class="sr-hint" *ngIf="!loadout() && !spinning()">
+          <p class="sr-hint" *ngIf="!loadout() && !spinning() && !noRepeat()">
             {{ i18n.t.hint }}
+          </p>
+          <p
+            class="sr-hint"
+            *ngIf="!loadout() && !spinning() && noRepeat() && availablePool().length === 0"
+          >
+            {{ i18n.t.noRepeatExhausted }}
           </p>
 
           <div

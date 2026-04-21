@@ -509,6 +509,8 @@ export class HomePage implements OnDestroy {
   displayOp = signal<Operator>(OPERATORS[0]);
   loadout   = signal<Loadout | null>(null);
   history   = signal<Operator[]>([]);
+  previousOperators = signal<string[]>([]);
+  noRepeat = signal(false);
   imgError  = signal(false);
   copyDone  = signal(false);
 
@@ -522,6 +524,15 @@ export class HomePage implements OnDestroy {
   pool = computed(() => {
     const f = this.filter();
     return f === 'all' ? OPERATORS : OPERATORS.filter(o => o.role === f);
+  });
+
+  availablePool = computed(() => {
+    const p = this.pool();
+    if (!this.noRepeat()) {
+      return p;
+    }
+    const seen = new Set(this.previousOperators());
+    return p.filter(o => !seen.has(o.id));
   });
 
   accent = computed(() =>
@@ -662,7 +673,7 @@ export class HomePage implements OnDestroy {
 
   // ── Roll ──────────────────────────────────────────────────────────────
   roll(): void {
-    const p = this.pool();
+    const p = this.availablePool();
     if (this.spinning() || p.length === 0) return;
 
     this.clearTimers();
@@ -671,6 +682,7 @@ export class HomePage implements OnDestroy {
     this.imgError.set(false);
 
     const chosen  = this.rand(p);
+    this.previousOperators.set([...this.previousOperators(), chosen.id]);
     const { primary, accessory } = this.choosePrimaryAndAccessory(chosen);
     const result: Loadout = {
       operator:  chosen,
@@ -708,6 +720,8 @@ export class HomePage implements OnDestroy {
 
   // ── Filter ────────────────────────────────────────────────────────────
   setFilter(f: Filter): void { this.filter.set(f); }
+
+  toggleNoRepeat(): void { this.noRepeat.set(!this.noRepeat()); }
 
   // ── Copy loadout ──────────────────────────────────────────────────────
   async copyLoadout(): Promise<void> {

@@ -15,6 +15,8 @@ export interface Translations {
   history: string; copy: string; copied: string;
   switchTo: string;
   speed: string;
+  noRepeat: string;
+  noRepeatExhausted: string;
   noAccessory: string;
 }
 
@@ -38,6 +40,8 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     copy:      '📋  COPY LOADOUT', copied: '✅  COPIED!',
     switchTo:  'ES',
     speed:     'SPEED',
+    noRepeat:  'NO REPEAT',
+    noRepeatExhausted: 'All selected operators are excluded. Disable NO REPEAT or change the filter.',
     noAccessory: 'No accessory',
   },
   es: {
@@ -59,6 +63,8 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     copy:      '📋  COPIAR LOADOUT', copied: '✅  ¡COPIADO!',
     switchTo:  'EN',
     speed:     'VELOCIDAD',
+    noRepeat:  'SIN REPETIR',
+    noRepeatExhausted: 'Todos los operadores ya han salido. Desactiva SIN REPETIR o cambia el filtro.',
     noAccessory: 'Sin accesorio',
   }
 };
