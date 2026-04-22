@@ -17,6 +17,10 @@ export interface Translations {
   speed: string;
   noRepeat: string;
   noRepeatExhausted: string;
+  excludeOperators: string;
+  excludeHint: string;
+  clearExcluded: string;
+  excluded: string;
   noAccessory: string;
 }
 
@@ -42,6 +46,10 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     speed:     'SPEED',
     noRepeat:  'NO REPEAT',
     noRepeatExhausted: 'All selected operators are excluded. Disable NO REPEAT or change the filter.',
+    excludeOperators: 'Exclude operators',
+    excludeHint: 'Click an operator to remove it from roulette',
+    clearExcluded: 'Clear excluded',
+    excluded: 'EXCLUDED',
     noAccessory: 'No accessory',
   },
   es: {
@@ -65,6 +73,10 @@ const TRANSLATIONS: Record<Lang, Translations> = {
     speed:     'VELOCIDAD',
     noRepeat:  'SIN REPETIR',
     noRepeatExhausted: 'Todos los operadores ya han salido. Desactiva SIN REPETIR o cambia el filtro.',
+    excludeOperators: 'Excluir operadores',
+    excludeHint: 'Pulsa un operador para quitarlo de la ruleta',
+    clearExcluded: 'Borrar excluidos',
+    excluded: 'EXCLUIDOS',
     noAccessory: 'Sin accesorio',
   }
 };

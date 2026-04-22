@@ -60,6 +60,50 @@
 
     <!-- ══ MAIN ═════════════════════════════════════════════════════════ -->
     <div class="sr-main">
+      <aside class="sr-sidebar" [class.open]="sidebarOpen()">
+        <div class="sr-sidebar-header">
+          <span class="sr-sidebar-title">{{ i18n.t.excludeOperators }}</span>
+          <div class="sr-sidebar-actions">
+            <button
+              class="sr-clear-btn sr-clear-inline"
+              *ngIf="excludedCount > 0"
+              (click)="clearExcludedOperators()"
+            >
+              {{ i18n.t.clearExcluded }}
+            </button>
+            <button
+              type="button"
+              class="sr-sidebar-toggle"
+              (click)="toggleSidebar()"
+              [attr.aria-expanded]="sidebarOpen()"
+            >
+              <span class="sr-sidebar-toggle-icon" [class.open]="sidebarOpen()">
+                ▼
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="sr-sidebar-body">
+          <div class="sr-sidebar-grid">
+            <button
+              type="button"
+              class="sr-operator-icon"
+              *ngFor="let op of pool()"
+              [class.excluded]="isOperatorExcluded(op)"
+              (click)="toggleOperatorExcluded(op)"
+              [attr.aria-pressed]="isOperatorExcluded(op)"
+              [attr.aria-label]="op.name"
+            >
+              <img [src]="getImgUrl(op.id)" [alt]="op.name" />
+            </button>
+          </div>
+          <div class="sr-sidebar-footer">
+            <span> {{ excludedCount }} {{ i18n.t.excluded }} </span>
+            <p class="sr-sidebar-note">{{ i18n.t.excludeHint }}</p>
+          </div>
+        </div>
+      </aside>
+
       <div class="sr-left-column">
         <div class="sr-spin-area">
           <!-- Card with bracket corners -->
@@ -198,8 +242,12 @@
         </div>
       </div>
 
-      <div class="sr-right-column" *ngIf="loadout() as l">
-        <div class="sr-result-panel">
+      <div class="sr-right-column">
+        <div
+          class="sr-result-panel"
+          *ngIf="loadout() as l"
+          [class.loading]="loadingDetails()"
+        >
           <div class="sr-panel-header">
             <div class="sr-panel-accent" [style.background]="accentHex()"></div>
             <span class="sr-panel-label">{{ i18n.t.loadout }}</span>
@@ -208,6 +256,12 @@
               {{ l.operator.role === 'attacker' ? i18n.t.badge_atk :
               i18n.t.badge_def }}
             </span>
+          </div>
+
+          <div class="sr-panel-loading-overlay" *ngIf="loadingDetails()">
+            <div class="sr-loading-text">
+              {{ i18n.lang() === 'es' ? 'Cargando...' : 'Loading...' }}
+            </div>
           </div>
 
           <div

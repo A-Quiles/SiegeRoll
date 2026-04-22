@@ -504,15 +504,22 @@ export class HomePage implements OnDestroy {
   i18n = inject(I18nService);
 
   // ── State ─────────────────────────────────────────────────────────────
+  operators = OPERATORS;
+
   filter  = signal<Filter>('all');
   spinning = signal(false);
   displayOp = signal<Operator>(OPERATORS[0]);
   loadout   = signal<Loadout | null>(null);
+  loadingDetails = signal(false);
+  sidebarOpen = signal(false);
   history   = signal<Operator[]>([]);
   previousOperators = signal<string[]>([]);
   noRepeat = signal(false);
+  excludedOperators = signal<string[]>([]);
   imgError  = signal(false);
   copyDone  = signal(false);
+
+  get excludedCount() { return this.excludedOperators().length; }
 
   constructor() {
     const initial = this.rand(this.pool());
@@ -526,13 +533,16 @@ export class HomePage implements OnDestroy {
     return f === 'all' ? OPERATORS : OPERATORS.filter(o => o.role === f);
   });
 
+  excludedSet = computed(() => new Set(this.excludedOperators()));
+
   availablePool = computed(() => {
     const p = this.pool();
+    const excluded = this.excludedSet();
     if (!this.noRepeat()) {
-      return p;
+      return p.filter(o => !excluded.has(o.id));
     }
     const seen = new Set(this.previousOperators());
-    return p.filter(o => !seen.has(o.id));
+    return p.filter(o => !excluded.has(o.id) && !seen.has(o.id));
   });
 
   accent = computed(() =>
@@ -671,6 +681,27 @@ export class HomePage implements OnDestroy {
     };
   }
 
+  isOperatorExcluded(operator: Operator): boolean {
+    return this.excludedSet().has(operator.id);
+  }
+
+  toggleOperatorExcluded(operator: Operator): void {
+    const current = this.excludedOperators();
+    if (current.includes(operator.id)) {
+      this.excludedOperators.set(current.filter(id => id !== operator.id));
+      return;
+    }
+    this.excludedOperators.set([...current, operator.id]);
+  }
+
+  clearExcludedOperators(): void {
+    this.excludedOperators.set([]);
+  }
+
+  toggleSidebar(): void {
+    this.sidebarOpen.set(!this.sidebarOpen());
+  }
+
   // ── Roll ──────────────────────────────────────────────────────────────
   roll(): void {
     const p = this.availablePool();
@@ -678,7 +709,7 @@ export class HomePage implements OnDestroy {
 
     this.clearTimers();
     this.spinning.set(true);
-    this.loadout.set(null);
+    this.loadingDetails.set(true);
     this.imgError.set(false);
 
     const chosen  = this.rand(p);
@@ -712,7 +743,10 @@ export class HomePage implements OnDestroy {
           const h = [chosen, ...this.history()].slice(0, 10);
           this.history.set(h);
 
-          setTimeout(() => this.loadout.set(result), 80);
+          setTimeout(() => {
+            this.loadout.set(result);
+            this.loadingDetails.set(false);
+          }, 80);
         }
       }, cum));
     }
