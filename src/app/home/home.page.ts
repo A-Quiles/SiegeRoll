@@ -630,8 +630,16 @@ export class HomePage implements OnDestroy {
     return arr[Math.floor(Math.random() * arr.length)];
   }
 
+  private isShieldPrimary(primary: string): boolean {
+    return primary.toUpperCase().includes('SHIELD');
+  }
+
   private choosePrimaryAndAccessory(operator: Operator): { primary: string; accessory?: string } {
     const primary = this.rand(operator.primaries);
+    if (this.isShieldPrimary(primary)) {
+      return { primary };
+    }
+
     const accessories = operator.primaryAccessories?.[primary]
       ?? operator.genericAccessories
       ?? WEAPON_ACCESSORIES[primary]
